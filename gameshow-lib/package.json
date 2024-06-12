@@ -1,0 +1,21 @@
+{
+  "name": "gameshow-lib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/Client.js",
+  "types": "dist/Client.d.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.1.4",
+    "typescript": "^5.0.4"
+  },
+  "files": [
+    "./**/*"
+  ]
+}

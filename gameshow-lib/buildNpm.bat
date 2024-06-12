@@ -1,0 +1,1 @@
+npm run clean && npm run build && cd dist && npm pack && cd ../../gameshow-client && npm remove gameshow-lib && npm install ../gameshow-lib/dist/gameshow-lib-1.0.0.tgz && cd ../gameshow-server && npm remove gameshow-lib && npm install ../gameshow-lib/dist/gameshow-lib-1.0.0.tgz && pause
