@@ -15,7 +15,15 @@
 
   html,
   body {
-    height: 100vh
+    height: 100vh;
+    font-family: 'Gameshow', Arial, Helvetica, sans-serif
+  }
+
+  @font-face {
+      font-family: 'Gameshow';
+      src: url('/fonts/MouldyCheeseRegular.ttf');
+      font-weight: normal;
+      font-style: normal;
   }
 }
 

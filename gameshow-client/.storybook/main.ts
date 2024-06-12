@@ -8,6 +8,9 @@ const config: StorybookConfig = {
 		'@chromatic-com/storybook',
 		'@storybook/addon-interactions'
 	],
+	core: {
+		crossOriginIsolated: false
+	},
 	framework: {
 		name: '@storybook/sveltekit',
 		options: {}

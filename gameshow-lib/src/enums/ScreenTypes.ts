@@ -1,6 +1,7 @@
 export enum ScreenTypes {
-    GAMESHOW_POINTS = 'Punkte',
-    PAUSE = 'Pause',
+    SHOW_POINTS = 'Punkte',
     WINNER_SCREEN = 'Gewinner Ansicht',
+    PAUSE = 'Pause',
     NEXT_GAME = 'Nächstes Spiel',
+    INGAME = "In Game",
 }

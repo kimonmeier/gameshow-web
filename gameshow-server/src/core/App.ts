@@ -10,6 +10,7 @@ export default class App {
     private readonly PlayerManager: PlayerManager;
     public lastControlled: number = 0;
     public currentPlayer: number = 0;
+    public currentGameNumber: number = 0;
 
     public constructor () {
         this.WebSocket = new WebSocketConnection();

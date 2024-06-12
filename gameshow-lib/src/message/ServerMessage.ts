@@ -1,6 +1,8 @@
 import { Config } from "../entities/generic/Config";
+import { GameInfo } from "../entities/generic/GameInfo";
 import { ScreenTypes } from "../enums/ScreenTypes";
 import { ServerEvents } from "../enums/ServerEvents";
+import { StartGameAction } from "./ClientMessage";
 import { GenericGameEvent } from "./generell/ServerMessageDetail";
 import { MemoryGameEvent, MemoryGameStartedEvent } from "./memory/ServerMessageDetails";
 
@@ -31,9 +33,10 @@ interface GameEvent {
     data: ServerGameEvents;
 }
 
-interface GameStartedEvent {
+export interface GameStartedEvent {
     type: ServerEvents.GAME_STARTED;
-    data: GameStarted;
+    info: GameInfo;
+    startData: StartGameAction
 }
 
 interface GameStoppedEvent {
@@ -48,30 +51,9 @@ interface ConfigUpdatedEvent {
     type: ServerEvents.CONFIG_UPDATED;
     config: Config;
 }
-
-
-type ShowScreenEvent = ShowScreenEventNoPayload | ShowScreenEventNextGame | ShowScreenEventWinner;
-
-interface ShowScreenEventNoPayload {
-    type: ServerEvents.SHOW_SCREEN;
-    screenType: ScreenTypes.PAUSE | ScreenTypes.GAMESHOW_POINTS;
-}
-
-interface ShowScreenEventNextGame {
-    type: ServerEvents.SHOW_SCREEN;
-    screenType: ScreenTypes.NEXT_GAME;
-    gameTitle: string;
-    gameNumber: number;
-}
-
-interface ShowScreenEventWinner {
-    type: ServerEvents.SHOW_SCREEN;
-    screenType: ScreenTypes.WINNER_SCREEN;
-    winnerId: string;
-}
-
 interface ShowStartedEvent {
     type: ServerEvents.SHOW_STARTED;
+    pointsNeededToWin: number,
 }
 
 interface MemberWonGameEvent {
@@ -79,9 +61,14 @@ interface MemberWonGameEvent {
     playerId: string;
 }
 
+interface MemberWonGameShowEvent {
+    type: ServerEvents.MEMBER_WON_GAMESHOW,
+    playerId: string
+}
+
 export type GameStarted = MemoryGameStartedEvent;
 
 export type ServerGameEvents = MemoryGameEvent | GenericGameEvent
 export type ServerGameSpecificEvents = GameStartedEvent | GameEvent;
 
-export type ServerMessage = MemberWonGameEvent | ShowStartedEvent | ShowScreenEvent | ConfigUpdatedEvent | GameStoppedEvent | ServerClosedEvent | PingServerEvent | NewMemberEvent | MemberSetIdEvent | RemoveMemberEvent | ServerGameSpecificEvents;
+export type ServerMessage = MemberWonGameShowEvent | MemberWonGameEvent | ShowStartedEvent  | ConfigUpdatedEvent | GameStoppedEvent | ServerClosedEvent | PingServerEvent | NewMemberEvent | MemberSetIdEvent | RemoveMemberEvent | ServerGameSpecificEvents;

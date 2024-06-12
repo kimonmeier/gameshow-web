@@ -13,6 +13,7 @@ export default class WebSocketConnection
 	implements Connection {
 	private socket!: WebSocket.Server;
 	private _clients: WebSocketClient[] = [];
+	private readonly events: ServerMessage[] = [];
 
 	public constructor () {
 		super();
@@ -43,6 +44,7 @@ export default class WebSocketConnection
 
 	public sendTo(clients: WebSocketClient[], m: ServerMessage): void {
 		for (const client of clients) client.send(m);
+		this.events.push(m);
 	}
 
 	public sendToViaIds(clients: string[], m: ServerMessage): void {
@@ -67,6 +69,9 @@ export default class WebSocketConnection
 		clientSocket.on("message", (m) => this.handleMessage(client, m));
 
 		client.send({ type: ServerEvents.PING, ms: 0 });
+		this.events.forEach(element => {
+			client.send(element);
+		});
 	};
 
 	private handleClose = (client: WebSocketClient) => {

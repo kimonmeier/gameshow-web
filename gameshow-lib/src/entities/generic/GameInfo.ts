@@ -1,18 +1,16 @@
 import { GamePointLayout } from "../../enums/GamePointLayout";
-import { Games } from "../../enums/Games";
-import { Card } from "../memory/Card";
 
-export interface GameInfo {
-    points: GamePointLayout;
-    maxPoints?: number;
+export interface GameInfoGeneric {
+    name: string;
+    points: GamePointLayout.NO_POINTS | GamePointLayout.POINTS_COUNT;
     buzzerActive: boolean;
-    data: GameSpecificData;
 }
 
-interface MemoryGameData {
-    game: Games.Memory;
-    cards: Card[];
+export interface GameInfoMaxPoints {
+    name: string;
+    points: GamePointLayout.POINTS_MAX;
+    maxPoints: number;
+    buzzerActive: boolean;
 }
 
-type GameSpecificData = MemoryGameData;
-
+export type GameInfo = GameInfoGeneric | GameInfoMaxPoints;

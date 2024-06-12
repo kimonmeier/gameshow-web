@@ -5,6 +5,7 @@
 	import { currentPlayer, enemyPlayer } from '$lib/stores/gamemaster/PlayerStore';
 	import { onMount } from 'svelte';
 	import App from '$services/GameManager';
+	import GameScreenContainer from '$lib/components/screen/GameScreenContainer.svelte';
 
 	onMount(() => {
 		if (!App.getInstance().isConnected) {
@@ -22,8 +23,8 @@
 <div
 	class="grid grid-cols-5 grid-rows-6 bg-gradient-to-tr from-purple-950 via-purple-900 to-pink-900 h-full w-full"
 >
-	<div class="bg-black col-span-5 row-span-4">
-		<slot name="currentGame" />
+	<div class="col-span-5 row-span-4 m-auto">
+		<GameScreenContainer />
 	</div>
 	<PlayerCard player={$currentPlayer} isRightSide={false} />
 	<div class="row-span-2">

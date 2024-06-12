@@ -38,6 +38,9 @@ export class GameManager {
         } else if (m.type == ClientEvents.GAME_MASTER_ACTION) {
             this.getManagerByGame(m.data.game).handleGameMasterInputs(m.data, client.uuid);
             return;
+        } else if (m.type == ClientEvents.START_GAME) {
+            this.startGame(m.data);
+            return;
         }
 
         console.log("GameManger doesnt handle this Message", m);

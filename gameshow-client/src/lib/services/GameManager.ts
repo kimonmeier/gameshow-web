@@ -11,7 +11,7 @@ import { GenericGameManager } from "$services/games/GenericGameManager";
 import { MemoryGameManager } from "$services/games/MemoryGameManager";
 import { get } from "svelte/store";
 import { currentPlayerId, isGamemaster, isLoggedIn } from "$stores/CredentialStore";
-import { gameshowStarted } from "$stores/GameStore";
+import { currentGameState, gameWinner, gameshowStarted } from "$stores/GameStore";
 
 export default class App {
     private static instance: App;
@@ -142,11 +142,17 @@ export default class App {
                     goto("/play");
                 }
                 break;
-                
-            case ServerEvents.GAME_STOPPED:
+            case ServerEvents.MEMBER_WON_GAME:
+                currentGameState.stopGameWithWinner(m.playerId);
+                break;
             case ServerEvents.GAME_STARTED:
+                this.getGameManager(m.startData.game).startGame(m.startData);
+                
+                currentGameState.startGame(m);
+                break;
+            case ServerEvents.MEMBER_WON_GAMESHOW:
+                break;
             case ServerEvents.CONFIG_UPDATED:
-            case ServerEvents.SHOW_SCREEN:
                 throw new Error("TO IMPLEMENT");
         }
     }

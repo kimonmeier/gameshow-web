@@ -36,6 +36,19 @@ interface GenericGameMasterSoundEvent {
     game: Games.Generic;
     action: GenericActions.PLAY_SOUND | GenericActions.STOP_SOUND,
     sound: GenericGameMasterAudioType
+    stopOthers: boolean
+}
+
+interface GenericGameMasterSetStreamerEvent {
+    game: Games.Generic;
+    action: GenericActions.SET_STREAMER;
+    streamerName: string;
+}
+
+interface GenericGameMasterSetUrlEvent {
+    game: Games.Generic;
+    action: GenericActions.SET_BROADCASTER_LINK,
+    link: string;
 }
 
 export enum GenericGameMasterAudioType {
@@ -55,7 +68,9 @@ export enum GenericActions {
     RELEASE_BUZZER,
     PLAY_SOUND,
     STOP_SOUND,
+    SET_STREAMER,
+    SET_BROADCASTER_LINK
 }
 
 
-export type GenericGameEvent = GenericGameMasterControlsEvent | GenericShowPointsChangedEvent | GenericMemberPointsChangedEvent | GenericGameMasterSoundEvent | GenericBuzzerEvent | GenericBuzzerPressedEvent;
+export type GenericGameEvent = GenericGameMasterSetStreamerEvent | GenericGameMasterSetUrlEvent | GenericGameMasterControlsEvent | GenericShowPointsChangedEvent | GenericMemberPointsChangedEvent | GenericGameMasterSoundEvent | GenericBuzzerEvent | GenericBuzzerPressedEvent;

@@ -18,7 +18,7 @@
 <div class="w-full">
 	<select
 		bind:value
-		class="bg-slate-600 focus:bg-slate-500 focus:border-b-blue-700 min-h-7.5 w-full opacity-100 {cursorForm} border border-gray-500 border-1 rounded-none px-2 text-sm font-medium leading-tight md:ml-0 md:rounded-sm"
+		class="bg-slate-600 focus:bg-slate-500 focus:border-b-blue-700 text-white min-h-7.5 w-full opacity-100 {cursorForm} border border-gray-500 border-1 rounded-none px-2 text-sm font-medium leading-tight md:ml-0 md:rounded-sm"
 		{disabled}
 		{id}
 		on:change

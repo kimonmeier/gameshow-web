@@ -1,5 +1,5 @@
 import { Games } from "../../enums/Games";
-import { ScreenTypes } from "../../enums/ScreenTypes";
+import { StartGameAction } from "../ClientMessage";
 import { GenericGameMasterAudioType } from "./ServerMessageDetail";
 
 interface GenericGameMasterPointsChangedEvent {
@@ -16,27 +16,16 @@ interface GenericGameMasterShowPointsChangedEvent {
     points: number;
 }
 
-type GenericGameMasterShowScreenEvent = GenericGameMasterShowScreenEventNoPayload | GenericGameMasterShowScreenEventNextGame | GenericGameMasterShowScreenEventWinner;
-
-interface GenericGameMasterShowScreenEventNoPayload {
+interface GenericGameMasterSetStreamerEvent {
     game: Games.Generic;
-    action: GenericGameMasterActions.SHOW_SCREEN;
-    screenType: ScreenTypes.PAUSE | ScreenTypes.GAMESHOW_POINTS;
+    action: GenericGameMasterActions.SET_STREAMER;
+    streamerName: string;
 }
 
-interface GenericGameMasterShowScreenEventNextGame {
+interface GenericGameMasterSetUrlEvent {
     game: Games.Generic;
-    action: GenericGameMasterActions.SHOW_SCREEN,
-    screenType: ScreenTypes.NEXT_GAME;
-    gameTitle: string;
-    gameNumber: number;
-}
-
-interface GenericGameMasterShowScreenEventWinner {
-    game: Games.Generic;
-    action: GenericGameMasterActions.SHOW_SCREEN,
-    screenType: ScreenTypes.WINNER_SCREEN;
-    winnerId: string;
+    action: GenericGameMasterActions.SET_BROADCASTER_LINK,
+    link: string;
 }
 
 interface GenericGameMasterControlsEvent {
@@ -58,6 +47,7 @@ interface GenericMitgliedBuzzerEvent {
 interface GenericGameMaterStartShowAction {
     game: Games.Generic,
     action: GenericGameMasterActions.START_GAMESHOW,
+    pointsNeededToWin: number,
 }
 
 interface GenericGameMasterSoundEvent {
@@ -69,14 +59,15 @@ interface GenericGameMasterSoundEvent {
 export enum GenericGameMasterActions {
     GAME_POINTS_CHANGED,
     SHOW_POINTS_CHANGED,
-    SHOW_SCREEN,
     GIVE_CONTROLS,
     TAKE_CONTROLS,
     LOCK_BUZZER,
     RELEASE_BUZZER,
     START_GAMESHOW,
     PLAY_SOUND,
-    STOP_SOUND
+    STOP_SOUND,
+    SET_STREAMER,
+    SET_BROADCASTER_LINK,
 }
 
 export enum GenericMitgliedActions {
@@ -84,5 +75,5 @@ export enum GenericMitgliedActions {
     INPUT_CHANGED,
 }
 
-export type GenericGameMasterEvent = GenericGameMasterSoundEvent | GenericGameMaterStartShowAction | GenericGameMasterBuzzerEvent | GenericGameMasterControlsEvent | GenericGameMasterShowScreenEvent | GenericGameMasterPointsChangedEvent | GenericGameMasterShowPointsChangedEvent;
+export type GenericGameMasterEvent = GenericGameMasterSoundEvent | GenericGameMaterStartShowAction | GenericGameMasterBuzzerEvent | GenericGameMasterControlsEvent | GenericGameMasterPointsChangedEvent | GenericGameMasterShowPointsChangedEvent | GenericGameMasterSetStreamerEvent | GenericGameMasterSetUrlEvent;
 export type GenericMitgliedEvent = GenericMitgliedBuzzerEvent;

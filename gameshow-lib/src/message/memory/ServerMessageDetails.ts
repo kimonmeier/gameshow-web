@@ -21,13 +21,6 @@ interface MemoryPhaseChangedEvent {
     phase: MemoryGamePhase;
 }
 
-interface MemoryMitgliedUpdatedPointsEvent {
-    game: Games.Memory;
-    action: MemoryGameActions.UPDATE_POINTS;
-    playerId: string;
-    points: number;
-}
-
 interface MemoryCardsGuessedEvent {
     game: Games.Memory,
     action: MemoryGameActions.CARDS_GUESSED,
@@ -45,7 +38,6 @@ export enum MemoryGameActions {
     CLOSE_CARD,
     NEW_CARDS,
     PHASE_CHANGED,
-    UPDATE_POINTS,
     CARDS_GUESSED,
 }
 
@@ -54,4 +46,4 @@ export interface MemoryGameStartedEvent {
     cards: Card[];
 }
 
-export type MemoryGameEvent = MemoryCardNewEvent | MemoryMitgliedUpdatedPointsEvent | MemoryPhaseChangedEvent | MemoryCardsCloseEvent | MemoryCardsOpenEvent | MemoryCardsGuessedEvent;
+export type MemoryGameEvent = MemoryCardNewEvent | MemoryPhaseChangedEvent | MemoryCardsCloseEvent | MemoryCardsOpenEvent | MemoryCardsGuessedEvent;

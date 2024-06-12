@@ -6,7 +6,7 @@ import { ClientGameMasterAction, ClientMitgliedAction, StartGameAction } from "g
 import { GenericGameMasterActions, GenericMitgliedActions } from "gameshow-lib/message/generell/ClientMessageDetail";
 import { BasicGameManager } from "../BaiscGameManager";
 import { GenericActions, GenericGameMasterAudioType } from "gameshow-lib/message/generell/ServerMessageDetail";
-import { ScreenTypes } from "gameshow-lib/enums/ScreenTypes";
+import { Server } from "http";
 
 export class GenericGameManger extends BasicGameManager {
     public readonly game: Games = Games.Generic;
@@ -57,13 +57,6 @@ export class GenericGameManger extends BasicGameManager {
                 this.playerManager.setShowPoints(m.playerId, m.points);
                 break;
 
-            case GenericGameMasterActions.SHOW_SCREEN:
-                this.sendMessage({
-                    ...m,
-                    type: ServerEvents.SHOW_SCREEN,
-                });
-                break;
-
             case GenericGameMasterActions.LOCK_BUZZER:
                 this.sendMessage({
                     type: ServerEvents.UPDATED_GAME_VALUES,
@@ -92,7 +85,8 @@ export class GenericGameManger extends BasicGameManager {
                     data: {
                         game: Games.Generic,
                         action: GenericActions.PLAY_SOUND,
-                        sound: m.sound
+                        sound: m.sound,
+                        stopOthers: false
                     }
                 });
                 break;
@@ -103,7 +97,8 @@ export class GenericGameManger extends BasicGameManager {
                     data: {
                         game: Games.Generic,
                         action: GenericActions.STOP_SOUND,
-                        sound: m.sound
+                        sound: m.sound,
+                        stopOthers: false
                     }
                 });
                 break;
@@ -111,18 +106,34 @@ export class GenericGameManger extends BasicGameManager {
             case GenericGameMasterActions.START_GAMESHOW:
                 this.sendMessage({
                     type: ServerEvents.SHOW_STARTED,
+                    pointsNeededToWin: m.pointsNeededToWin
                 });
-
-                this.sendMessage({
-                    type: ServerEvents.SHOW_SCREEN,
-                    screenType: ScreenTypes.PAUSE
-                })
                 break;
-
+            case GenericGameMasterActions.SET_BROADCASTER_LINK:
+                this.sendMessage({
+                    type: ServerEvents.UPDATED_GAME_VALUES,
+                    data: {
+                        game: Games.Generic,
+                        action: GenericActions.SET_BROADCASTER_LINK,
+                        link: m.link
+                    }
+                });
+                break;
+            case GenericGameMasterActions.SET_STREAMER:
+                this.sendMessage({
+                    type: ServerEvents.UPDATED_GAME_VALUES,
+                    data: {
+                        game: Games.Generic,
+                        action: GenericActions.SET_STREAMER,
+                        streamerName: m.streamerName
+                    }
+                });
+                break;
             case GenericGameMasterActions.GIVE_CONTROLS:
+                this.givePlayerControl(m.playerId);
+                break;
             case GenericGameMasterActions.TAKE_CONTROLS:
-                throw new Error("Implement this shit")
-                //TODO: Write logic
+                this.takePlayerControl(m.playerId);
                 break;
         }
     }
@@ -158,6 +169,7 @@ export class GenericGameManger extends BasicGameManager {
                 game: Games.Generic,
                 action: GenericActions.PLAY_SOUND,
                 sound: GenericGameMasterAudioType.GAME_FINISHED,
+                stopOthers: true
             }
         })
 
@@ -225,6 +237,13 @@ export class GenericGameManger extends BasicGameManager {
     }
 
     public swapPlayerControls(): void {
-        
+        let players = this.playerManager.getPlayers();
+        players = players.filter(player => this.playerControls.find(x => x == player.client.uuid) == null)
+
+        this.takePlayersControl();
+
+        players.forEach((player) => {
+            this.givePlayerControl(player.client.uuid);
+        })        
     }
 }
