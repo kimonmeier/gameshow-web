@@ -6,12 +6,13 @@ import { ServerMessage } from "gameshow-lib/message/ServerMessage";
 import { IncomingMessage } from "http";
 import * as WebSocket from "ws";
 import WebSocketClient from "./WebSocketClient";
+import { Server } from "ws";
 
 
 export default class WebSocketConnection
 	extends EventEmitter
 	implements Connection {
-	private socket!: WebSocket.Server;
+	private socket!: Server;
 	private _clients: WebSocketClient[] = [];
 	private readonly events: ServerMessage[] = [];
 
@@ -20,8 +21,8 @@ export default class WebSocketConnection
 	}
 
 	public connect(): void {
-		this.socket = new WebSocket.Server({
-			port: 2222
+		this.socket = new WebSocket.WebSocketServer({
+			port: 2223
 		});
 
 		this.socket.on("connection", this.handleConnect);

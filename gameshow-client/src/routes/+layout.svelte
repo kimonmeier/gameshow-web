@@ -21,8 +21,8 @@
 	import ingameSoundFile1 from '$lib/assets/ingame_track_1.mp3';
 	import ingameSoundFile2 from '$lib/assets/ingame_track_2.mp3';
 	import ingameSoundFile3 from '$lib/assets/ingame_track_3.mp3';
-	import ingameSoundFile4 from '$lib/assets/ingame_track_4.mp3';
-	import ingameSoundFile5 from '$lib/assets/ingame_track_5.mp3';
+	import ingameSoundFile4 from '$lib/assets/ingame_track_4.wav';
+	import ingameSoundFile5 from '$lib/assets/ingame_track_5.wav';
 	import nextGameSoundFile from '$lib/assets/nextGame.mp3';
 	import App from '$lib/services/GameManager';
 	import '../app.css';

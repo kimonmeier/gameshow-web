@@ -37,8 +37,8 @@ export default class App {
     }
 
     public startApp(): void {
-        //this.client = new WebSocketClient("wss://gameshow.k-meier.ch");
-        this.client = new WebSocketClient("ws://localhost:2222");
+        this.client = new WebSocketClient("wss://gameshow.k-meier.ch/brainbattle/socket");
+        //this.client = new WebSocketClient("ws://localhost:2222");
 
         this.client.recieve = (m) => this.recieve(m);
     }
@@ -65,7 +65,6 @@ export default class App {
         goto("/", {
             invalidateAll: true,
             replaceState: true,
-            state: null
         });
     }
 
@@ -139,7 +138,7 @@ export default class App {
                 gameshowStarted.set(true);
 
                 if (!get(isGamemaster)) {
-                    goto("/play");
+                    goto("/brainbattle/play");
                 }
                 break;
             case ServerEvents.MEMBER_WON_GAME:
