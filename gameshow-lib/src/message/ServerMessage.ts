@@ -1,9 +1,9 @@
 import { Config } from "../entities/generic/Config";
 import { GameInfo } from "../entities/generic/GameInfo";
-import { ScreenTypes } from "../enums/ScreenTypes";
 import { ServerEvents } from "../enums/ServerEvents";
 import { StartGameAction } from "./ClientMessage";
 import { GenericGameEvent } from "./generell/ServerMessageDetail";
+import { KartenkundeGameEvent, KartenkundeStartedEvent } from "./kartenkunde/ServerMessageDetail";
 import { MemoryGameEvent, MemoryGameStartedEvent } from "./memory/ServerMessageDetails";
 
 interface PingServerEvent {
@@ -36,7 +36,7 @@ interface GameEvent {
 export interface GameStartedEvent {
     type: ServerEvents.GAME_STARTED;
     info: GameInfo;
-    startData: StartGameAction
+    startData: StartGameAction;
 }
 
 interface GameStoppedEvent {
@@ -63,12 +63,12 @@ interface MemberWonGameEvent {
 
 interface MemberWonGameShowEvent {
     type: ServerEvents.MEMBER_WON_GAMESHOW,
-    playerId: string
+    playerId: string;
 }
 
-export type GameStarted = MemoryGameStartedEvent;
+export type GameStarted = MemoryGameStartedEvent | KartenkundeStartedEvent;
 
-export type ServerGameEvents = MemoryGameEvent | GenericGameEvent
+export type ServerGameEvents = MemoryGameEvent | GenericGameEvent | KartenkundeGameEvent;
 export type ServerGameSpecificEvents = GameStartedEvent | GameEvent;
 
-export type ServerMessage = MemberWonGameShowEvent | MemberWonGameEvent | ShowStartedEvent  | ConfigUpdatedEvent | GameStoppedEvent | ServerClosedEvent | PingServerEvent | NewMemberEvent | MemberSetIdEvent | RemoveMemberEvent | ServerGameSpecificEvents;
+export type ServerMessage = MemberWonGameShowEvent | MemberWonGameEvent | ShowStartedEvent | ConfigUpdatedEvent | GameStoppedEvent | ServerClosedEvent | PingServerEvent | NewMemberEvent | MemberSetIdEvent | RemoveMemberEvent | ServerGameSpecificEvents;

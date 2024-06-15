@@ -1,4 +1,5 @@
 export enum Games {
     Generic = "Generell",
-    Memory = "Memory"
+    Memory = "Memory",
+    Kartenkunde = "Kartenkunde"
 }
