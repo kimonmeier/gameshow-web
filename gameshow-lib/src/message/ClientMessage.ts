@@ -1,6 +1,7 @@
 import { Config } from "../entities/generic/Config";
 import { ClientEvents } from "../enums/ClientEvents";
 import { GenericGameMasterEvent as GenericGameMasterActionEvent, GenericMitgliedEvent } from "./generell/ClientMessageDetail";
+import { KartenkundeMemberActionEvent, KartenkundenGameMasterActionEvent, StartKartenkundeAction } from "./kartenkunde/ClientMessageDetail";
 import { MemoryGameMasterActionEvent, MemoryMemberActionEvent, StartMemoryAction } from "./memory/ClientMessageDetails";
 
 interface ConnectionSuccessEvent {
@@ -43,9 +44,9 @@ interface StartGameEvent {
     data: StartGameAction;
 }
 
-export type ClientMitgliedAction = MemoryMemberActionEvent | GenericMitgliedEvent;
-export type ClientGameMasterAction = MemoryGameMasterActionEvent | GenericGameMasterActionEvent;
-export type StartGameAction = StartMemoryAction;
+export type ClientMitgliedAction = MemoryMemberActionEvent | GenericMitgliedEvent | KartenkundeMemberActionEvent;
+export type ClientGameMasterAction = MemoryGameMasterActionEvent | GenericGameMasterActionEvent | KartenkundenGameMasterActionEvent;
+export type StartGameAction = StartMemoryAction | StartKartenkundeAction;
 
 export type ClientGameSpecificEvents = StartGameEvent | MemberActionEvent | GameMasterActionEvent;
 
