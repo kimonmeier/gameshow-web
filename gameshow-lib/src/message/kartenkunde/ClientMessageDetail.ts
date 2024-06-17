@@ -1,10 +1,10 @@
 import { Games } from "../../enums/Games";
+import type { Location } from "../../entities/kartenkunde/Location";
 
 interface KartenkundeMapClickedAction {
     game: Games.Kartenkunde,
     action: KartenkundeClientAction.MAP_CLICKED,
-    langitude: number,
-    longitude: number;
+    location: Location;
 }
 
 interface KartenkundeLockedInAction {
@@ -24,7 +24,7 @@ interface KartenkundeNextQuestionAction {
 
 interface KartenkundeAddQuestionAction {
     game: Games.Kartenkunde;
-    action: KartenkundeGameMasterAction.ADD_QUESTION;
+    action: KartenkundeGameMasterAction.UPDATE_QUESTION;
     id: string;
     question: string;
     location: Location;
@@ -49,7 +49,7 @@ export enum KartenkundeClientAction {
 export enum KartenkundeGameMasterAction {
     REVEAL_GUESSES,
     NEXT_QUESTION,
-    ADD_QUESTION,
+    UPDATE_QUESTION,
     REMOVE_QUESTION
 }
 

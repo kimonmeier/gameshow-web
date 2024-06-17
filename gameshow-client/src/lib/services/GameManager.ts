@@ -12,6 +12,7 @@ import { MemoryGameManager } from "$services/games/MemoryGameManager";
 import { get } from "svelte/store";
 import { currentPlayerId, isGamemaster, isLoggedIn } from "$stores/CredentialStore";
 import { currentGameState, gameWinner, gameshowStarted } from "$stores/GameStore";
+import { KartenkundeGameManager } from "./games/KartenkundeGameManager";
 
 export default class App {
     private static instance: App;
@@ -32,13 +33,14 @@ export default class App {
 
         this.gameManager = [
             new GenericGameManager(this),
-            new MemoryGameManager(this)
+            new MemoryGameManager(this),
+            new KartenkundeGameManager(this)
         ];
     }
 
     public startApp(): void {
-        this.client = new WebSocketClient("wss://gameshow.k-meier.ch/brainbattle/socket");
-        //this.client = new WebSocketClient("ws://localhost:2222");
+        //this.client = new WebSocketClient("wss://gameshow.k-meier.ch/brainbattle/socket");
+        this.client = new WebSocketClient("ws://localhost:2223");
 
         this.client.recieve = (m) => this.recieve(m);
     }
@@ -83,6 +85,7 @@ export default class App {
 
     public getGameManager(game: Games.Generic): GenericGameManager;
     public getGameManager(game: Games.Memory): MemoryGameManager;
+    public getGameManager(game: Games.Kartenkunde): KartenkundeGameManager;
     public getGameManager(game: Games): BasicGameManager {
         return this.gameManager.find(x => x.game === game)!;
     }
@@ -138,7 +141,7 @@ export default class App {
                 gameshowStarted.set(true);
 
                 if (!get(isGamemaster)) {
-                    goto("/brainbattle/play");
+                    goto("/play");
                 }
                 break;
             case ServerEvents.MEMBER_WON_GAME:

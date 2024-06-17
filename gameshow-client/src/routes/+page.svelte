@@ -48,7 +48,7 @@
 
 	onMount(() => {
 		if ($isLoggedIn) {
-			goto('/brainbattle/play');
+			goto('/play');
 		}
 
 		if ($page.url.searchParams.has('public')) {
@@ -60,7 +60,7 @@
 				$isLoggedIn = true;
 
 				tick().then(() => {
-					goto('/brainbattle/public');
+					goto('/public');
 				});
 			});
 		}

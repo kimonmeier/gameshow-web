@@ -1,5 +1,5 @@
 import { ScreenTypes } from "gameshow-lib/enums/ScreenTypes";
-import { get, writable, type Readable  } from "svelte/store";
+import { get, writable, type Readable, type Updater  } from "svelte/store";
 import type { ComponentType } from "svelte";
 import { Games } from "gameshow-lib/enums/Games";
 import MemoryGame from "$lib/components/games/MemoryGame.svelte";
@@ -16,7 +16,8 @@ export interface GameStateStore extends Readable<GameScreenInfo> {
 }
 
 export interface MockedGameStateStore extends GameStateStore {
-    set: (this: void, info: GameScreenInfo) => void
+    set: (this: void, info: GameScreenInfo) => void,
+    update: (this: void, info: Updater<GameScreenInfo>) => void,
 }
 
 function getTypeByGame(game: Games): ComponentType {
@@ -29,13 +30,14 @@ function getTypeByGame(game: Games): ComponentType {
 }
 
 function createGameStateStore(): MockedGameStateStore {
-    const { set, subscribe } = writable<GameScreenInfo>({ type: ScreenTypes.PAUSE });
+    const { set, update, subscribe } = writable<GameScreenInfo>({ type: ScreenTypes.PAUSE });
 
     let currentGameNumber = 0;
 
     return {
         set,
         subscribe,
+        update,
         stopGame: () => {
             set({
                 type: ScreenTypes.PAUSE

@@ -3,15 +3,14 @@ import { get } from "svelte/store";
 import { BasicGameManager } from "$services/games/BaiscGameManager";
 import { ClientEvents } from "gameshow-lib/enums/ClientEvents";
 import { memoryAnzCol, memoryAnzRounds, memoryAnzRows, memoryIcons } from "$stores/memory/GameStarteValues";
-import type { ServerGameEvents } from "gameshow-lib/message/ServerMessage";
-import { MemoryGameActions } from "gameshow-lib/message/memory/ServerMessageDetails";
+import { MemoryGameActions, type MemoryGameEvent } from "gameshow-lib/message/memory/ServerMessageDetails";
 import { currentGamePhase, guessedCards, openCards } from "$lib/stores/memory/GameValue";
 import type { StartMemoryAction } from "gameshow-lib/message/memory/ClientMessageDetails";
 
 export class MemoryGameManager extends BasicGameManager {
     public readonly game: Games = Games.Memory;
     
-    public gameValueUpdated(m: ServerGameEvents): void {
+    public gameValueUpdated(m: MemoryGameEvent): void {
         switch (m.action) {
             case MemoryGameActions.OPEN_CARD:
                 openCards.update((x) => {

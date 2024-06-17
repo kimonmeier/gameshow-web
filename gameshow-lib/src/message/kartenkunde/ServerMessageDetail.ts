@@ -1,4 +1,5 @@
 import { Games } from "../../enums/Games";
+import type { Location } from "../../entities/kartenkunde/Location";
 
 interface PlayerGuess {
     playerId: string;
@@ -18,6 +19,15 @@ interface KartenkundeRevealGuessAction {
     playerGuesses: PlayerGuess[];
 }
 
+interface KartenkundeQuestionUpdates {
+    game: Games.Kartenkunde,
+    action: KartenkundeGameAction.QUESTION_UPDATES,
+    questions: {
+        question: string,
+        location: Location
+    }[]
+}
+
 export interface KartenkundeStartedEvent {
     game: Games.Kartenkunde;
     anzahlRunden: number;
@@ -26,6 +36,7 @@ export interface KartenkundeStartedEvent {
 export enum KartenkundeGameAction {
     REVEAL_GUESSES,
     NEW_QUESTION,
+    QUESTION_UPDATES
 }
 
-export type KartenkundeGameEvent = KartenkundeNewQuestionAction | KartenkundeRevealGuessAction; 
+export type KartenkundeGameEvent = KartenkundeQuestionUpdates | KartenkundeNewQuestionAction | KartenkundeRevealGuessAction; 
