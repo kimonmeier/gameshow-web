@@ -29,6 +29,7 @@
     "@sveltejs/adapter-static": "^3.0.0",
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "@types/leaflet": "^1.9.12",
     "@types/node": "^20.14.2",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
@@ -51,6 +52,7 @@
   "type": "module",
   "dependencies": {
     "gameshow-lib": "file:../gameshow-lib/dist/gameshow-lib-1.0.0.tgz",
+    "leaflet": "^1.9.4",
     "svelte-sound": "^0.6.0"
   }
 }
