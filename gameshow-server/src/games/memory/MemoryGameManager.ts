@@ -222,7 +222,7 @@ export class MemoryGameManager extends BasicGameManager {
                 let currentIcon: MemoryIcon;
 
                 console.log("IF", iconsUsedOnce.length < this.gameInfo.gridLayout.anzCol * this.gameInfo.gridLayout.anzRows - this.cards.length);
-                if (Math.random() > 0.5 && iconsUsedOnce.length > 0 && iconsUsedOnce.length >= this.gameInfo.gridLayout.anzCol * this.gameInfo.gridLayout.anzRows - this.cards.length) {
+                if (Math.random() > 0.5 && iconsUsedOnce.length > 0 || (iconsUsedOnce.length >= this.gameInfo.gridLayout.anzCol * this.gameInfo.gridLayout.anzRows - this.cards.length)) {
                     currentIcon = iconsUsedOnce[Math.round(Math.random() * iconsUsedOnce.length)];
                     iconsUsedOnce = iconsUsedOnce.filter(x => x != currentIcon);console.log("IF UNUSED")
 
